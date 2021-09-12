@@ -1,0 +1,1330 @@
+// [MS-RPRN] interface
+ [
+     uuid(12345678-1234-ABCD-EF00-0123456789AB),
+     version(1.0),
+     ms_union,
+     endpoint("ncacn_np:[\\pipe\\spoolss]"),
+     pointer_default(unique)
+ ]
+ interface winspool {
+  
+ import "ms-dtyp.idl";
+  
+ #if __midl < 700
+ #define disable_consistency_check
+ #endif
+  
+ // [MS-RPRN] common constants
+ #define TABLE_DWORD              0x1
+ #define TABLE_STRING             0x2
+ #define TABLE_DEVMODE            0x3
+ #define TABLE_TIME               0x4
+ #define TABLE_SECURITYDESCRIPTOR 0x5
+ #define SPLFILE_CONTENT_TYPE_PROP_NAME L"Spool File Contents"
+  
+ // [MS-RPRN] common enumerations
+  
+ typedef enum {
+     VER_NT_WORKSTATION = 0x00000001,
+     VER_NT_DOMAIN_CONTROLLER = 0x00000002,
+     VER_NT_SERVER = 0x00000003
+ } OS_TYPE;
+  
+ typedef enum {
+     BIDI_NULL   = 0,
+     BIDI_INT    = 1,
+     BIDI_FLOAT  = 2,
+     BIDI_BOOL   = 3,
+     BIDI_STRING = 4,
+     BIDI_TEXT   = 5,
+     BIDI_ENUM   = 6,
+     BIDI_BLOB   = 7
+ } BIDI_TYPE;
+  
+ typedef enum {
+     kRpcPropertyTypeString = 1,
+     kRpcPropertyTypeInt32,
+     kRpcPropertyTypeInt64,
+     kRpcPropertyTypeByte,
+     kRpcPropertyTypeBuffer
+ } RPC_EPrintPropertyType;
+  
+ // [MS-RPRN] common data types
+ typedef unsigned short LANGID;
+ typedef [context_handle] void* GDI_HANDLE;
+ typedef [context_handle] void* PRINTER_HANDLE;
+ typedef [handle] wchar_t* STRING_HANDLE;
+  
+ // [MS-RPRN] common utility structures
+ typedef struct {
+     long cx;
+     long cy;
+ } SIZE;
+  
+ typedef struct {
+     long left;
+     long top;
+     long right;
+     long bottom;
+ } RECTL;
+  
+ // [MS-RPRN] common device state structure
+ typedef struct _devicemode {
+     wchar_t  dmDeviceName[32];
+  
+     unsigned short dmSpecVersion;
+     unsigned short dmDriverVersion;
+     unsigned short dmSize;
+     unsigned short dmDriverExtra;
+  
+     DWORD dmFields;
+  
+     short dmOrientation;
+     short dmPaperSize;
+     short dmPaperLength;
+     short dmPaperWidth;
+     short dmScale;
+     short dmCopies;
+     short dmDefaultSource;
+     short dmPrintQuality;
+     short dmColor;
+     short dmDuplex;
+     short dmYResolution;
+     short dmTTOption;
+     short dmCollate;
+  
+     wchar_t  dmFormName[32];
+  
+     unsigned short reserved0;
+  
+     DWORD reserved1;
+     DWORD reserved2;
+     DWORD reserved3;
+     DWORD dmNup;
+     DWORD reserved4;
+     DWORD dmICMMethod;
+     DWORD dmICMIntent;
+     DWORD dmMediaType;
+     DWORD dmDitherType;
+     DWORD reserved5;
+     DWORD reserved6;
+     DWORD reserved7;
+     DWORD reserved8;
+ } DEVMODE;
+  
+ // [MS-RPRN] common info structures
+ typedef struct _DOC_INFO_1 {
+     [string] wchar_t* pDocName;
+     [string] wchar_t* pOutputFile;
+     [string] wchar_t* pDatatype;
+ } DOC_INFO_1;
+  
+ typedef struct _DRIVER_INFO_1 {
+     [string] wchar_t* pName;
+ } DRIVER_INFO_1;
+  
+ typedef struct _DRIVER_INFO_2 {
+     DWORD cVersion;
+     [string] wchar_t* pName;
+     [string] wchar_t* pEnvironment;
+     [string] wchar_t* pDriverPath;
+     [string] wchar_t* pDataFile;
+     [string] wchar_t* pConfigFile;
+ } DRIVER_INFO_2;
+  
+ typedef struct _RPC_DRIVER_INFO_3 {
+     DWORD cVersion;
+     [string] wchar_t* pName;
+     [string] wchar_t* pEnvironment;
+     [string] wchar_t* pDriverPath;
+     [string] wchar_t* pDataFile;
+     [string] wchar_t* pConfigFile;
+     [string] wchar_t* pHelpFile;
+     [string] wchar_t* pMonitorName;
+     [string] wchar_t* pDefaultDataType;
+     DWORD cchDependentFiles;
+     [size_is(cchDependentFiles), unique]
+       wchar_t* pDependentFiles;
+ } RPC_DRIVER_INFO_3;
+  
+ typedef struct _RPC_DRIVER_INFO_4 {
+     DWORD cVersion;
+     [string] wchar_t* pName;
+     [string] wchar_t* pEnvironment;
+     [string] wchar_t* pDriverPath;
+     [string] wchar_t* pDataFile;
+     [string] wchar_t* pConfigFile;
+     [string] wchar_t* pHelpFile;
+     [string] wchar_t* pMonitorName;
+     [string] wchar_t* pDefaultDataType;
+     DWORD cchDependentFiles;
+     [size_is(cchDependentFiles), unique]
+       wchar_t* pDependentFiles;
+     DWORD cchPreviousNames;
+     [size_is(cchPreviousNames), unique]
+       wchar_t* pszzPreviousNames;
+ } RPC_DRIVER_INFO_4;
+  
+ typedef struct _RPC_DRIVER_INFO_6 {
+     DWORD cVersion;
+     [string] wchar_t* pName;
+     [string] wchar_t* pEnvironment;
+     [string] wchar_t* pDriverPath;
+     [string] wchar_t* pDataFile;
+     [string] wchar_t* pConfigFile;
+     [string] wchar_t* pHelpFile;
+     [string] wchar_t* pMonitorName;
+     [string] wchar_t* pDefaultDataType;
+     DWORD cchDependentFiles;
+     [size_is(cchDependentFiles), unique]
+       wchar_t* pDependentFiles;
+     DWORD cchPreviousNames;
+     [size_is(cchPreviousNames), unique]
+       wchar_t* pszzPreviousNames;
+     FILETIME ftDriverDate;
+     DWORDLONG dwlDriverVersion;
+     [string] wchar_t* pMfgName;
+     [string] wchar_t* pOEMUrl;
+     [string] wchar_t* pHardwareID;
+     [string] wchar_t* pProvider;
+ } RPC_DRIVER_INFO_6;
+  
+ typedef struct _RPC_DRIVER_INFO_8 {
+     DWORD cVersion;
+     [string] wchar_t* pName;
+     [string] wchar_t* pEnvironment;
+     [string] wchar_t* pDriverPath;
+     [string] wchar_t* pDataFile;
+     [string] wchar_t* pConfigFile;
+     [string] wchar_t* pHelpFile;
+     [string] wchar_t* pMonitorName;
+     [string] wchar_t* pDefaultDataType;
+     DWORD cchDependentFiles;
+     [size_is(cchDependentFiles), unique]
+       wchar_t* pDependentFiles;
+     DWORD cchPreviousNames;
+     [size_is(cchPreviousNames), unique]
+       wchar_t* pszzPreviousNames;
+     FILETIME ftDriverDate;
+     DWORDLONG dwlDriverVersion;
+     [string] wchar_t* pMfgName;
+     [string] wchar_t* pOEMUrl;
+     [string] wchar_t* pHardwareID;
+     [string] wchar_t* pProvider;
+     [string] wchar_t* pPrintProcessor;
+     [string] wchar_t* pVendorSetup;
+     DWORD cchColorProfiles;
+     [size_is(cchColorProfiles), unique]
+       wchar_t* pszzColorProfiles;
+     [string] wchar_t* pInfPath;
+     DWORD dwPrinterDriverAttributes;
+     DWORD cchCoreDependencies;
+     [size_is(cchCoreDependencies), unique]
+       wchar_t* pszzCoreDriverDependencies;
+     FILETIME ftMinInboxDriverVerDate;
+     DWORDLONG dwlMinInboxDriverVerVersion;
+ } RPC_DRIVER_INFO_8;
+  
+ typedef struct _FORM_INFO_1 {
+     DWORD Flags;
+     [string] wchar_t* pName;
+     SIZE Size;
+     RECTL ImageableArea;
+ } FORM_INFO_1;
+  
+ typedef struct _RPC_FORM_INFO_2 {
+     DWORD Flags;
+     [string, unique] const wchar_t* pName;
+     SIZE Size;
+     RECTL ImageableArea;
+     [string, unique] const char* pKeyword;
+     DWORD StringType;
+     [string, unique] const wchar_t* pMuiDll;
+     DWORD dwResourceId;
+     [string, unique] const wchar_t* pDisplayName;
+     LANGID wLangID;
+ } RPC_FORM_INFO_2;
+  
+ typedef struct _JOB_INFO_1 {
+     DWORD JobId;
+     [string] wchar_t* pPrinterName;
+     [string] wchar_t* pMachineName;
+     [string] wchar_t* pUserName;
+     [string] wchar_t* pDocument;
+     [string] wchar_t* pDatatype;
+     [string] wchar_t* pStatus;
+     DWORD Status;
+     DWORD Priority;
+     DWORD Position;
+     DWORD TotalPages;
+     DWORD PagesPrinted;
+     SYSTEMTIME Submitted;
+ } JOB_INFO_1;
+  
+ typedef struct _JOB_INFO_2 {
+     DWORD JobId;
+     [string] wchar_t* pPrinterName;
+     [string] wchar_t* pMachineName;
+     [string] wchar_t* pUserName;
+     [string] wchar_t* pDocument;
+     [string] wchar_t* pNotifyName;
+     [string] wchar_t* pDatatype;
+     [string] wchar_t* pPrintProcessor;
+     [string] wchar_t* pParameters;
+     [string] wchar_t* pDriverName;
+     ULONG_PTR pDevMode;
+     [string] wchar_t* pStatus;
+     ULONG_PTR pSecurityDescriptor;
+     DWORD Status;
+     DWORD Priority;
+     DWORD Position;
+     DWORD StartTime;
+     DWORD UntilTime;
+     DWORD TotalPages;
+     DWORD Size;
+     SYSTEMTIME Submitted;
+     DWORD Time;
+     DWORD PagesPrinted;
+ } JOB_INFO_2;
+  
+ typedef struct _JOB_INFO_3 {
+     DWORD JobId;
+     DWORD NextJobId;
+     DWORD Reserved;
+ } JOB_INFO_3;
+  
+ typedef struct _JOB_INFO_4 {
+     DWORD JobId;
+     [string] wchar_t* pPrinterName;
+     [string] wchar_t* pMachineName;
+     [string] wchar_t* pUserName;
+     [string] wchar_t* pDocument;
+     [string] wchar_t* pNotifyName;
+     [string] wchar_t* pDatatype;
+     [string] wchar_t* pPrintProcessor;
+     [string] wchar_t* pParameters;
+     [string] wchar_t* pDriverName;
+     ULONG_PTR pDevMode;
+     [string] wchar_t* pStatus;
+     ULONG_PTR pSecurityDescriptor;
+     DWORD Status;
+     DWORD Priority;
+     DWORD Position;
+     DWORD StartTime;
+     DWORD UntilTime;
+     DWORD TotalPages;
+     DWORD Size;
+     SYSTEMTIME Submitted;
+     DWORD Time;
+     DWORD PagesPrinted;
+     long SizeHigh;
+ } JOB_INFO_4;
+  
+ typedef struct _MONITOR_INFO_1 {
+     [string] wchar_t* pName;
+ } MONITOR_INFO_1;
+  
+ typedef struct _MONITOR_INFO_2 {
+     [string] wchar_t* pName;
+     [string] wchar_t* pEnvironment;
+     [string] wchar_t* pDLLName;
+ } MONITOR_INFO_2;
+  
+ typedef struct _PORT_INFO_1 {
+     [string] wchar_t* pPortName;
+ } PORT_INFO_1;
+  
+ typedef struct _PORT_INFO_2 {
+     [string] wchar_t* pPortName;
+     [string] wchar_t* pMonitorName;
+     [string] wchar_t* pDescription;
+     DWORD fPortType;
+     DWORD Reserved;
+ } PORT_INFO_2;
+  
+ typedef struct _PORT_INFO_3 {
+     DWORD dwStatus;
+     [string] wchar_t* pszStatus;
+     DWORD dwSeverity;
+ } PORT_INFO_3;
+  
+ typedef struct _PORT_INFO_FF {
+     [string] wchar_t* pPortName;
+     DWORD cbMonitorData;
+     BYTE* pMonitorData;
+ } PORT_INFO_FF;
+  
+ typedef struct _PRINTER_INFO_STRESS {
+     [string] wchar_t* pPrinterName;
+     [string] wchar_t* pServerName;
+     DWORD cJobs;
+     DWORD cTotalJobs;
+     DWORD cTotalBytes;
+     SYSTEMTIME stUpTime;
+     DWORD MaxcRef;
+     DWORD cTotalPagesPrinted;
+     DWORD dwGetVersion;
+     DWORD fFreeBuild;
+     DWORD cSpooling;
+     DWORD cMaxSpooling;
+     DWORD cRef;
+     DWORD cErrorOutOfPaper;
+     DWORD cErrorNotReady;
+     DWORD cJobError;
+     DWORD dwNumberOfProcessors;
+     DWORD dwProcessorType;
+     DWORD dwHighPartTotalBytes;
+     DWORD cChangeID;
+     DWORD dwLastError;
+     DWORD Status;
+     DWORD cEnumerateNetworkPrinters;
+     DWORD cAddNetPrinters;
+     unsigned short wProcessorArchitecture;
+     unsigned short wProcessorLevel;
+     DWORD cRefIC;
+     DWORD dwReserved2;
+     DWORD dwReserved3;
+ } PRINTER_INFO_STRESS;
+  
+ typedef struct _PRINTER_INFO_1 {
+     DWORD Flags;
+     [string] wchar_t* pDescription;
+     [string] wchar_t* pName;
+     [string] wchar_t* pComment;
+ } PRINTER_INFO_1;
+  
+ typedef struct _PRINTER_INFO_2 {
+     [string] wchar_t* pServerName;
+     [string] wchar_t* pPrinterName;
+     [string] wchar_t* pShareName;
+     [string] wchar_t* pPortName;
+     [string] wchar_t* pDriverName;
+     [string] wchar_t* pComment;
+     [string] wchar_t* pLocation;
+     ULONG_PTR pDevMode;
+     [string] wchar_t* pSepFile;
+     [string] wchar_t* pPrintProcessor;
+     [string] wchar_t* pDatatype;
+     [string] wchar_t* pParameters;
+     ULONG_PTR pSecurityDescriptor;
+     DWORD Attributes;
+     DWORD Priority;
+     DWORD DefaultPriority;
+     DWORD StartTime;
+     DWORD UntilTime;
+     DWORD Status;
+     DWORD cJobs;
+     DWORD AveragePPM;
+ } PRINTER_INFO_2;
+  
+ typedef struct _PRINTER_INFO_3 {
+     ULONG_PTR pSecurityDescriptor;
+ } PRINTER_INFO_3;
+  
+ typedef struct _PRINTER_INFO_4 {
+     [string] wchar_t* pPrinterName;
+     [string] wchar_t* pServerName;
+     DWORD Attributes;
+ } PRINTER_INFO_4;
+  
+ typedef struct _PRINTER_INFO_5 {
+     [string] wchar_t* pPrinterName;
+     [string] wchar_t* pPortName;
+     DWORD Attributes;
+     DWORD DeviceNotSelectedTimeout;
+     DWORD TransmissionRetryTimeout;
+ } PRINTER_INFO_5;
+  
+ typedef struct _PRINTER_INFO_6 {
+     DWORD dwStatus;
+ } PRINTER_INFO_6;
+  
+ typedef struct _PRINTER_INFO_7 {
+     [string] wchar_t* pszObjectGUID;
+     DWORD dwAction;
+ } PRINTER_INFO_7;
+  
+ typedef struct _PRINTER_INFO_8 {
+     ULONG_PTR pDevMode;
+ } PRINTER_INFO_8;
+  
+ typedef struct _PRINTER_INFO_9 {
+     ULONG_PTR pDevMode;
+ } PRINTER_INFO_9;
+  
+ typedef struct _SPLCLIENT_INFO_1 {
+     DWORD dwSize;
+     [string] wchar_t* pMachineName;
+     [string] wchar_t* pUserName;
+     DWORD dwBuildNum;
+     DWORD dwMajorVersion;
+     DWORD dwMinorVersion;
+     unsigned short wProcessorArchitecture;
+ } SPLCLIENT_INFO_1;
+  
+ typedef struct _SPLCLIENT_INFO_2 {
+     LONG_PTR notUsed;
+ } SPLCLIENT_INFO_2;
+  
+ typedef struct _SPLCLIENT_INFO_3 {
+     unsigned int cbSize;
+     DWORD dwFlags;
+     DWORD dwSize;
+     [string] wchar_t* pMachineName;
+     [string] wchar_t* pUserName;
+     DWORD dwBuildNum;
+     DWORD dwMajorVersion;
+     DWORD dwMinorVersion;
+     unsigned short wProcessorArchitecture;
+     unsigned  __int64 hSplPrinter;
+ } SPLCLIENT_INFO_3;
+  
+ // [MS-RPRN] common info container structures
+ typedef struct _DEVMODE_CONTAINER {
+     DWORD cbBuf;
+     [size_is(cbBuf), unique] BYTE* pDevMode;
+ } DEVMODE_CONTAINER;
+  
+ typedef struct _DOC_INFO_CONTAINER {
+     DWORD Level;
+     [switch_is(Level)] union {
+       [case(1)]
+         DOC_INFO_1* pDocInfo1;
+     } DocInfo;
+ } DOC_INFO_CONTAINER;
+  
+ typedef struct _DRIVER_CONTAINER {
+     DWORD Level;
+     [switch_is(Level)] union {
+       [case(1)]
+         DRIVER_INFO_1* pNotUsed;
+       [case(2)]
+         DRIVER_INFO_2* Level2;
+       [case(3)]
+         RPC_DRIVER_INFO_3* Level3;
+       [case(4)]
+         RPC_DRIVER_INFO_4* Level4;
+       [case(6)]
+         RPC_DRIVER_INFO_6* Level6;
+       [case(8)]
+         RPC_DRIVER_INFO_8* Level8;
+     } DriverInfo;
+ } DRIVER_CONTAINER;
+  
+ typedef struct _FORM_CONTAINER {
+     DWORD Level;
+     [switch_is(Level)] union {
+       [case(1)]
+         FORM_INFO_1* pFormInfo1;
+       [case(2)]
+         RPC_FORM_INFO_2* pFormInfo2;
+     } FormInfo;
+ } FORM_CONTAINER;
+  
+ typedef struct _JOB_CONTAINER {
+     DWORD Level;
+     [switch_is(Level)] union {
+       [case(1)]
+         JOB_INFO_1* Level1;
+       [case(2)]
+         JOB_INFO_2* Level2;
+       [case(3)]
+         JOB_INFO_3* Level3;
+       [case(4)]
+         JOB_INFO_4* Level4;
+     } JobInfo;
+ } JOB_CONTAINER;
+  
+ typedef struct _MONITOR_CONTAINER {
+     DWORD Level;
+     [switch_is(Level)] union {
+       [case(1)]
+         MONITOR_INFO_1* pMonitorInfo1;
+       [case(2)]
+         MONITOR_INFO_2* pMonitorInfo2;
+     } MonitorInfo;
+ } MONITOR_CONTAINER;
+  
+ typedef struct _PORT_CONTAINER {
+     DWORD Level;
+     [switch_is(0x00FFFFFF & Level)]
+       union {
+       [case(1)]
+         PORT_INFO_1* pPortInfo1;
+       [case(2)]
+         PORT_INFO_2* pPortInfo2;
+       [case(3)]
+         PORT_INFO_3* pPortInfo3;
+       [case(0x00FFFFFF)]
+         PORT_INFO_FF* pPortInfoFF;
+     } PortInfo;
+ } PORT_CONTAINER;
+  
+ typedef struct _PORT_VAR_CONTAINER {
+     DWORD cbMonitorData;
+     [size_is(cbMonitorData), unique] BYTE*
+       pMonitorData;
+ } PORT_VAR_CONTAINER;
+  
+ typedef struct _PRINTER_CONTAINER {
+     DWORD Level;
+     [switch_is(Level)] union {
+       [case(0)]
+         PRINTER_INFO_STRESS* pPrinterInfoStress;
+       [case(1)]
+         PRINTER_INFO_1* pPrinterInfo1;
+       [case(2)]
+         PRINTER_INFO_2* pPrinterInfo2;
+       [case(3)]
+         PRINTER_INFO_3* pPrinterInfo3;
+       [case(4)]
+         PRINTER_INFO_4* pPrinterInfo4;
+       [case(5)]
+         PRINTER_INFO_5* pPrinterInfo5;
+       [case(6)]
+         PRINTER_INFO_6* pPrinterInfo6;
+       [case(7)]
+         PRINTER_INFO_7* pPrinterInfo7;
+       [case(8)]
+         PRINTER_INFO_8* pPrinterInfo8;
+       [case(9)]
+         PRINTER_INFO_9* pPrinterInfo9;
+     } PrinterInfo;
+ } PRINTER_CONTAINER;
+  
+ typedef struct _RPC_BINARY_CONTAINER {
+     DWORD cbBuf;
+     [size_is(cbBuf), unique] BYTE* pszString;
+ } RPC_BINARY_CONTAINER;
+  
+ typedef struct _RPC_BIDI_DATA {
+     DWORD dwBidiType;
+     [switch_is(dwBidiType)] union {
+     [case(BIDI_NULL, BIDI_BOOL)]
+         int bData;
+     [case(BIDI_INT)]
+         long iData;
+     [case(BIDI_STRING, BIDI_TEXT, BIDI_ENUM)]
+         [string,unique] wchar_t* sData;
+     [case(BIDI_FLOAT)]
+         float fData;
+     [case(BIDI_BLOB)]
+         RPC_BINARY_CONTAINER biData;
+     } u;
+ } RPC_BIDI_DATA;
+  
+ typedef struct _RPC_BIDI_REQUEST_DATA {
+     DWORD dwReqNumber;
+     [string, unique] wchar_t* pSchema;
+     RPC_BIDI_DATA data;
+ } RPC_BIDI_REQUEST_DATA;
+  
+ typedef struct _RPC_BIDI_RESPONSE_DATA {
+     DWORD dwResult;
+     DWORD dwReqNumber;
+     [string, unique] wchar_t* pSchema;
+     RPC_BIDI_DATA data;
+ } RPC_BIDI_RESPONSE_DATA;
+  
+ typedef struct _RPC_BIDI_REQUEST_CONTAINER {
+     DWORD Version;
+     DWORD Flags;
+     DWORD Count;
+     [size_is(Count), unique] RPC_BIDI_REQUEST_DATA aData[];
+ } RPC_BIDI_REQUEST_CONTAINER;
+  
+ typedef struct _RPC_BIDI_RESPONSE_CONTAINER {
+     DWORD Version;
+     DWORD Flags;
+     DWORD Count;
+     [size_is(Count), unique] RPC_BIDI_RESPONSE_DATA aData[];
+ } RPC_BIDI_RESPONSE_CONTAINER;
+  
+ typedef struct SECURITY_CONTAINER {
+     DWORD cbBuf;
+     [size_is(cbBuf), unique] BYTE* pSecurity;
+ } SECURITY_CONTAINER;
+  
+ typedef struct _SPLCLIENT_CONTAINER {
+     DWORD Level;
+     [switch_is(Level)] union {
+       [case(1)]
+         SPLCLIENT_INFO_1* pClientInfo1;
+       [case(2)]
+         SPLCLIENT_INFO_2* pNotUsed1;
+       [case(3)]
+         SPLCLIENT_INFO_3* pNotUsed2;
+     } ClientInfo;
+ } SPLCLIENT_CONTAINER;
+  
+ typedef struct _STRING_CONTAINER {
+     DWORD cbBuf;
+     [size_is(cbBuf/2), unique] WCHAR* pszString;
+ } STRING_CONTAINER;
+  
+ typedef struct _SYSTEMTIME_CONTAINER {
+     DWORD cbBuf;
+     SYSTEMTIME* pSystemTime;
+ } SYSTEMTIME_CONTAINER;
+  
+ typedef struct _RPC_V2_NOTIFY_OPTIONS_TYPE {
+     unsigned short Type;
+     unsigned short Reserved0;
+     DWORD Reserved1;
+     DWORD Reserved2;
+     DWORD Count;
+     [size_is(Count), unique] unsigned short* pFields;
+ } RPC_V2_NOTIFY_OPTIONS_TYPE;
+  
+ typedef struct _RPC_V2_NOTIFY_OPTIONS {
+     DWORD Version;
+     DWORD Reserved;
+     DWORD Count;
+     [size_is(Count), unique] RPC_V2_NOTIFY_OPTIONS_TYPE* pTypes;
+ } RPC_V2_NOTIFY_OPTIONS;
+  
+ typedef
+ [switch_type (DWORD)]
+     union _RPC_V2_NOTIFY_INFO_DATA_DATA {
+       [case(TABLE_STRING)]
+         STRING_CONTAINER String;
+       [case(TABLE_DWORD)]
+         DWORD dwData[2];
+       [case(TABLE_TIME)]
+         SYSTEMTIME_CONTAINER SystemTime;
+       [case(TABLE_DEVMODE)]
+         DEVMODE_CONTAINER DevMode;
+       [case(TABLE_SECURITYDESCRIPTOR)]
+         SECURITY_CONTAINER SecurityDescriptor;
+ } RPC_V2_NOTIFY_INFO_DATA_DATA;
+  
+ typedef struct _RPC_V2_NOTIFY_INFO_DATA {
+     unsigned short Type;
+     unsigned short Field;
+     DWORD Reserved;
+     DWORD Id;
+     [switch_is(Reserved & 0xFFFF)]
+       RPC_V2_NOTIFY_INFO_DATA_DATA Data;
+ } RPC_V2_NOTIFY_INFO_DATA;
+  
+ typedef struct _RPC_V2_NOTIFY_INFO {
+     DWORD Version;
+     DWORD Flags;
+     DWORD Count;
+     [size_is(Count), unique] RPC_V2_NOTIFY_INFO_DATA aData[];
+ } RPC_V2_NOTIFY_INFO;
+  
+ typedef [switch_type(DWORD)] union _RPC_V2_UREPLY_PRINTER {
+     [case (0)]
+       RPC_V2_NOTIFY_INFO* pInfo;
+ } RPC_V2_UREPLY_PRINTER;
+  
+ typedef struct _CORE_PRINTER_DRIVER {
+     GUID         CoreDriverGUID;
+     FILETIME     ftDriverDate;
+     DWORDLONG    dwlDriverVersion;
+     wchar_t      szPackageID[260];
+ } CORE_PRINTER_DRIVER;
+  
+ typedef struct {
+     RPC_EPrintPropertyType ePropertyType;
+  
+     [switch_is(ePropertyType)]
+     union {
+         [case(kRpcPropertyTypeString)]
+             [string] wchar_t *propertyString;
+         [case(kRpcPropertyTypeInt32)]
+             LONG              propertyInt32;
+         [case(kRpcPropertyTypeInt64)]
+             LONGLONG          propertyInt64;
+         [case(kRpcPropertyTypeByte)]
+             BYTE              propertyByte;
+         [case(kRpcPropertyTypeBuffer)]
+             struct {
+                                  DWORD  cbBuf;
+                 [size_is(cbBuf)] BYTE   *pBuf;
+             } propertyBlob;
+     } value;
+ } RPC_PrintPropertyValue;
+  
+ typedef struct {
+     [string] wchar_t                *propertyName;
+              RPC_PrintPropertyValue propertyValue;
+ } RPC_PrintNamedProperty;
+  
+ typedef enum {
+     kInvalidJobState = 0,
+     kLogJobPrinted,
+     kLogJobRendered,
+     kLogJobError,
+     kLogJobPipelineError,
+     kLogOfflineFileFull
+ } EBranchOfficeJobEventType;
+  
+ typedef struct {
+     DWORD             Status;
+     [string] wchar_t* pDocumentName;
+     [string] wchar_t* pUserName;
+     [string] wchar_t* pMachineName;
+     [string] wchar_t* pPrinterName;
+     [string] wchar_t* pPortName;
+     LONGLONG          Size;
+     DWORD             TotalPages;
+ } RPC_BranchOfficeJobDataPrinted;
+  
+ typedef struct {
+     LONGLONG    Size;
+     DWORD       ICMMethod;
+     short       Color;
+     short       PrintQuality;
+     short       YResolution;
+     short       Copies;
+     short       TTOption;
+ } RPC_BranchOfficeJobDataRendered;
+  
+ typedef struct {
+     DWORD             LastError;
+     [string] wchar_t* pDocumentName;
+     [string] wchar_t* pUserName;
+     [string] wchar_t* pPrinterName;
+     [string] wchar_t* pDataType;
+     LONGLONG          TotalSize;
+     LONGLONG          PrintedSize;
+     DWORD             TotalPages;
+     DWORD             PrintedPages;
+     [string] wchar_t* pMachineName;
+     [string] wchar_t* pJobError;
+     [string] wchar_t* pErrorDescription;
+ } RPC_BranchOfficeJobDataError;
+  
+ typedef struct {
+     [string] wchar_t* pDocumentName;
+     [string] wchar_t* pPrinterName;
+     [string] wchar_t* pExtraErrorInfo;
+ } RPC_BranchOfficeJobDataPipelineFailed;
+  
+ typedef struct {
+     [string] wchar_t* pMachineName;
+ } RPC_BranchOfficeLogOfflineFileFull;
+  
+ typedef struct {
+     EBranchOfficeJobEventType  eEventType;
+     DWORD                      JobId;
+  
+     [switch_type(EBranchOfficeJobEventType), switch_is(eEventType)]
+     union {
+         [case(kLogJobPrinted)]
+              RPC_BranchOfficeJobDataPrinted             LogJobPrinted;
+         [case(kLogJobRendered)]
+              RPC_BranchOfficeJobDataRendered            LogJobRendered;
+         [case(kLogJobError)]
+              RPC_BranchOfficeJobDataError               LogJobError;
+         [case(kLogJobPipelineError)]
+              RPC_BranchOfficeJobDataPipelineFailed      LogPipelineFailed;
+         [case(kLogOfflineFileFull)]
+              RPC_BranchOfficeLogOfflineFileFull         LogOfflineFileFull;
+     } JobInfo;
+ } RPC_BranchOfficeJobData;
+  
+ typedef struct {
+     DWORD cJobDataEntries;
+     [size_is(cJobDataEntries), unique] RPC_BranchOfficeJobData JobData[];
+ } RPC_BranchOfficeJobDataContainer;
+  
+ // [MS-RPRN] methods
+ DWORD
+ RpcEnumPrinters(
+    [in] DWORD Flags,
+    [in, string, unique]  STRING_HANDLE Name,
+    [in] DWORD Level,
+    [in, out, unique, size_is(cbBuf)] BYTE*
+        pPrinterEnum,
+    [in] DWORD  cbBuf,
+    [out] DWORD*  pcbNeeded,
+    [out] DWORD*  pcReturned
+ );
+  
+ DWORD
+ RpcOpenPrinter(
+    [in, string, unique] STRING_HANDLE pPrinterName,
+    [out] PRINTER_HANDLE* pHandle,
+    [in, string, unique] wchar_t* pDatatype,
+    [in] DEVMODE_CONTAINER* pDevModeContainer,
+    [in] DWORD AccessRequired
+ );
+  
+ DWORD
+ RpcSetJob(
+     [in] PRINTER_HANDLE  hPrinter,
+     [in] DWORD JobId,
+     [in, unique] JOB_CONTAINER* pJobContainer,
+     [in] DWORD Command
+ );
+  
+ DWORD
+ RpcGetJob(
+    [in] PRINTER_HANDLE hPrinter,
+    [in] DWORD JobId,
+    [in] DWORD Level,
+    [in, out, unique, size_is(cbBuf)] BYTE*
+        pJob,
+    [in] DWORD cbBuf,
+    [out] DWORD* pcbNeeded
+ );
+  
+ DWORD
+ RpcEnumJobs(
+    [in] PRINTER_HANDLE hPrinter,
+    [in] DWORD FirstJob,
+    [in] DWORD NoJobs,
+    [in] DWORD Level,
+    [in, out, unique, size_is(cbBuf)] BYTE*
+        pJob,
+    [in] DWORD cbBuf,
+    [out] DWORD* pcbNeeded,
+    [out] DWORD* pcReturned
+ );
+  
+ DWORD
+ RpcAddPrinter(
+    [in, string, unique] STRING_HANDLE pName,
+    [in] PRINTER_CONTAINER* pPrinterContainer,
+    [in] DEVMODE_CONTAINER* pDevModeContainer,
+    [in] SECURITY_CONTAINER* pSecurityContainer,
+    [out] PRINTER_HANDLE* pHandle
+ );
+  
+ DWORD
+ RpcDeletePrinter(
+    [in] PRINTER_HANDLE hPrinter
+ );
+  
+ DWORD
+ RpcSetPrinter(
+    [in] PRINTER_HANDLE hPrinter,
+    [in] PRINTER_CONTAINER* pPrinterContainer,
+    [in] DEVMODE_CONTAINER* pDevModeContainer,
+    [in] SECURITY_CONTAINER* pSecurityContainer,
+    [in] DWORD Command
+ );
+  
+ DWORD
+ RpcGetPrinter(
+     [in] PRINTER_HANDLE hPrinter,
+     [in] DWORD Level,
+     [in, out, unique, size_is(cbBuf)] BYTE*
+         pPrinter,
+     [in] DWORD cbBuf,
+     [out] DWORD* pcbNeeded
+     );
+  
+ DWORD
+ RpcAddPrinterDriver(
+    [in, string, unique] STRING_HANDLE pName,
+    [in] DRIVER_CONTAINER* pDriverContainer
+ );
+  
+ DWORD
+ RpcEnumPrinterDrivers(
+    [in, string, unique] STRING_HANDLE pName,
+    [in, string, unique] wchar_t* pEnvironment,
+    [in] DWORD Level,
+    [in, out, unique, size_is(cbBuf)] BYTE*
+        pDrivers,
+    [in] DWORD cbBuf,
+    [out] DWORD* pcbNeeded,
+    [out] DWORD* pcReturned
+ );
+  
+ DWORD
+ RpcGetPrinterDriver(
+    [in] PRINTER_HANDLE hPrinter,
+    [in, string, unique] wchar_t* pEnvironment,
+    [in] DWORD Level,
+    [in, out, unique, size_is(cbBuf)] BYTE*
+         pDriver,
+    [in] DWORD cbBuf,
+    [out] DWORD* pcbNeeded
+ );
+  
+ DWORD
+ RpcGetPrinterDriverDirectory(
+     [in, string, unique] STRING_HANDLE  pName,
+     [in, string, unique] wchar_t*  pEnvironment,
+     [in] DWORD Level,
+     [in, out, unique, size_is(cbBuf)] BYTE*
+          pDriverDirectory,
+     [in] DWORD cbBuf,
+     [out] DWORD* pcbNeeded
+ );
+  
+ DWORD
+ RpcDeletePrinterDriver(
+    [in, string, unique] STRING_HANDLE pName,
+    [in, string] wchar_t* pEnvironment,
+    [in, string] wchar_t* pDriverName
+ );
+  
+ DWORD
+ RpcAddPrintProcessor(
+    [in, string, unique] STRING_HANDLE pName,
+    [in, string] wchar_t* pEnvironment,
+    [in, string] wchar_t* pPathName,
+    [in, string] wchar_t* pPrintProcessorName
+ );
+  
+ DWORD
+ RpcEnumPrintProcessors(
+    [in, string, unique] STRING_HANDLE pName,
+    [in, string, unique] wchar_t* pEnvironment,
+    [in] DWORD Level,
+    [in, out, unique, size_is(cbBuf)] BYTE*
+         pPrintProcessorInfo,
+    [in] DWORD cbBuf,
+    [out] DWORD* pcbNeeded,
+    [out] DWORD* pcReturned
+ );
+  
+ DWORD
+ RpcGetPrintProcessorDirectory(
+     [in, string, unique] STRING_HANDLE  pName,
+     [in, string, unique] wchar_t*  pEnvironment,
+     [in] DWORD Level,
+     [in, out, unique, size_is(cbBuf)] BYTE*
+          pPrintProcessorDirectory,
+     [in] DWORD cbBuf,
+     [out] DWORD* pcbNeeded
+ );
+  
+ DWORD
+ RpcStartDocPrinter(
+    [in] PRINTER_HANDLE hPrinter,
+    [in] DOC_INFO_CONTAINER* pDocInfoContainer,
+    [out] DWORD* pJobId
+ );
+  
+ DWORD
+ RpcStartPagePrinter(
+    [in] PRINTER_HANDLE hPrinter
+ );
+  
+ DWORD
+ RpcWritePrinter(
+    [in] PRINTER_HANDLE hPrinter,
+    [in, size_is(cbBuf)] BYTE* pBuf,
+    [in] DWORD cbBuf,
+    [out] DWORD* pcWritten
+ );
+  
+ DWORD
+ RpcEndPagePrinter(
+    [in] PRINTER_HANDLE hPrinter
+ );
+  
+ DWORD
+ RpcAbortPrinter(
+    [in] PRINTER_HANDLE hPrinter
+ );
+  
+ DWORD
+ RpcReadPrinter(
+    [in] PRINTER_HANDLE hPrinter,
+    [out, size_is(cbBuf)] BYTE* pBuf,
+    [in] DWORD cbBuf,
+    [out] DWORD* pcNoBytesRead
+ );
+  
+ DWORD
+ RpcEndDocPrinter(
+    [in] PRINTER_HANDLE hPrinter
+ );
+  
+ DWORD
+ RpcAddJob(
+     [in] PRINTER_HANDLE  hPrinter,
+     [in] DWORD Level,
+     [in, out, unique, size_is(cbBuf)] BYTE*
+          pAddJob,
+     [in] DWORD cbBuf,
+     [out] DWORD* pcbNeeded
+ );
+  
+ DWORD
+ RpcScheduleJob(
+     [in] PRINTER_HANDLE  hPrinter,
+     [in] DWORD JobId
+ );
+  
+ DWORD
+ RpcGetPrinterData(
+     [in] PRINTER_HANDLE hPrinter,
+     [in, string] wchar_t* pValueName,
+     [out] DWORD* pType,
+     [out, size_is(nSize)] BYTE* pData,
+     [in] DWORD nSize,
+     [out] DWORD* pcbNeeded
+ );
+  
+ DWORD
+ RpcSetPrinterData(
+     [in] PRINTER_HANDLE hPrinter,
+     [in, string] wchar_t*  pValueName,
+     [in] DWORD Type,
+     [in, size_is(cbData)] BYTE* pData,
+     [in] DWORD cbData
+ );
+  
+ DWORD
+ RpcWaitForPrinterChange(
+    [in] PRINTER_HANDLE hPrinter,
+    [in] DWORD Flags,
+    [out] DWORD* pFlags
+ );
+  
+ DWORD
+ RpcClosePrinter(
+    [in, out] PRINTER_HANDLE*phPrinter
+ );
+  
+ DWORD
+ RpcAddForm(
+     [in] PRINTER_HANDLE hPrinter,
+     [in] FORM_CONTAINER* pFormInfoContainer
+ );
+  
+ DWORD
+ RpcDeleteForm(
+     [in] PRINTER_HANDLE hPrinter,
+     [in, string] wchar_t* pFormName
+ );
+  
+ DWORD
+ RpcGetForm(
+     [in] PRINTER_HANDLE hPrinter,
+     [in, string] wchar_t* pFormName,
+     [in] DWORD Level,
+     [in, out, unique, size_is(cbBuf)] BYTE*
+          pForm,
+     [in] DWORD cbBuf,
+     [out] DWORD* pcbNeeded
+ );
+  
+ DWORD
+ RpcSetForm(
+     [in] PRINTER_HANDLE hPrinter,
+     [in, string] wchar_t* pFormName,
+     [in] FORM_CONTAINER* pFormInfoContainer
+ );
+  
+ DWORD
+ RpcEnumForms(
+    [in] PRINTER_HANDLE hPrinter,
+    [in] DWORD Level,
+    [in, out, unique, size_is(cbBuf)] BYTE*
+         pForm,
+    [in] DWORD  cbBuf,
+    [out] DWORD*  pcbNeeded,
+    [out] DWORD*  pcReturned
+ );
+  
+ DWORD
+ RpcEnumPorts(
+    [in, string, unique] STRING_HANDLE pName,
+    [in] DWORD Level,
+    [in, out, unique, size_is(cbBuf)] BYTE*
+         pPort,
+    [in] DWORD  cbBuf,
+    [out] DWORD*  pcbNeeded,
+    [out] DWORD*  pcReturned
+ );
+  
+ DWORD
+ RpcEnumMonitors(
+    [in, string, unique] STRING_HANDLE pName,
+    [in] DWORD Level,
+    [in, out, unique, size_is(cbBuf)] BYTE*
+         pMonitor,
+    [in] DWORD  cbBuf,
+    [out] DWORD*  pcbNeeded,
+    [out] DWORD*  pcReturned
+ );
+  
+ void
+ Opnum37NotUsedOnWire();
+  
+ void
+ Opnum38NotUsedOnWire();
+  
+ DWORD
+ RpcDeletePort(
+    [in, string, unique] STRING_HANDLE pName,
+    [in] ULONG_PTR hWnd,
+    [in, string] wchar_t* pPortName
+ );
+  
+ DWORD
+ RpcCreatePrinterIC(
+    [in] PRINTER_HANDLE hPrinter,
+    [out] GDI_HANDLE* pHandle,
+    [in] DEVMODE_CONTAINER* pDevModeContainer
+ );
+  
+ DWORD
+ RpcPlayGdiScriptOnPrinterIC(
+     [in] GDI_HANDLE  hPrinterIC,
+     [in, size_is(cIn)] BYTE* pIn,
+     [in] DWORD cIn,
+     [out, size_is(cOut)] BYTE* pOut,
+     [in] DWORD cOut,
+     [in] DWORD ul
+ );
+  
+ DWORD
+ RpcDeletePrinterIC(
+     [in, out] GDI_HANDLE* phPrinterIC
+ );
+  
+ void
+ Opnum43NotUsedOnWire();
+  
+ void
+ Opnum44NotUsedOnWire();
+  
+ void
+ Opnum45NotUsedOnWire();
+  
+ DWORD
+ RpcAddMonitor(
+    [in, string, unique] STRING_HANDLE Name,
+    [in] MONITOR_CONTAINER* pMonitorContainer
+ );
+  
+ DWORD
+ RpcDeleteMonitor(
+    [in, string, unique] STRING_HANDLE Name,
+    [in, string, unique] wchar_t* pEnvironment,
+    [in, string] wchar_t* pMonitorName
+ );
+  
+ DWORD
+ RpcDeletePrintProcessor(
+    [in, string, unique] STRING_HANDLE Name,
+    [in, string, unique] wchar_t* pEnvironment,
+    [in, string] wchar_t* pPrintProcessorName
+ );
+  
+ void
+ Opnum49NotUsedOnWire();
+  
+ void
+ Opnum50NotUsedOnWire();
+  
+ DWORD
+ RpcEnumPrintProcessorDatatypes(
+    [in, string, unique] STRING_HANDLE pName,
+    [in, string, unique] wchar_t* pPrintProcessorName,
+    [in] DWORD Level,
+    [in, out, unique, size_is(cbBuf)] BYTE*
+         pDatatypes,
+    [in] DWORD  cbBuf,
+    [out] DWORD*  pcbNeeded,
+    [out] DWORD*  pcReturned
+ );
+  
+ DWORD
+ RpcResetPrinter(
+    [in] PRINTER_HANDLE hPrinter,
+    [in, string, unique] wchar_t* pDatatype,
+    [in] DEVMODE_CONTAINER* pDevModeContainer
+ );
+  
+ DWORD
+ RpcGetPrinterDriver2(
+    [in] PRINTER_HANDLE hPrinter,
+    [in, string, unique] wchar_t* pEnvironment,
+    [in] DWORD Level,
+    [in, out, unique, size_is(cbBuf)] BYTE*
+         pDriver,
+    [in] DWORD cbBuf,
+    [out] DWORD* pcbNeeded,
+    [in] DWORD dwClientMajorVersion,
+    [in] DWORD dwClientMinorVersion,
+    [out] DWORD* pdwServerMaxVersion,
+    [out] DWORD* pdwServerMinVersion
+ );
+  
+ void
+ Opnum54NotUsedOnWire();
+  
+ void
+ Opnum55NotUsedOnWire();
+  
+ DWORD
+ RpcFindClosePrinterChangeNotification(
+    [in] PRINTER_HANDLE hPrinter
+ );
+  
+ void
+ Opnum57NotUsedOnWire();
+  
+ DWORD
+ RpcReplyOpenPrinter(
+    [in, string] STRING_HANDLE pMachine,
+    [out] PRINTER_HANDLE*phPrinterNotify,
+    [in] DWORD dwPrinterRemote,
+    [in] DWORD dwType,
+    [in, range(0, 512)] DWORD cbBuffer,
+    [in, unique, size_is(cbBuffer)] BYTE*
+         pBuffer
+ );
+  
+ DWORD
+ RpcRouterReplyPrinter(
+    [in] PRINTER_HANDLE hNotify,
+    [in] DWORD fdwFlags,
+    [in, range(0, 512)] DWORD cbBuffer,
+    [in, unique, size_is(cbBuffer)] BYTE*
+         pBuffer
+ );
+  
+ DWORD
+ RpcReplyClosePrinter(
+    [in, out] PRINTER_HANDLE*phNotify
+ );
+  
+ DWORD
+ RpcAddPortEx(
+     [in, string, unique] STRING_HANDLE pName,
+     [in] PORT_CONTAINER* pPortContainer,
+     [in] PORT_VAR_CONTAINER* pPortVarContainer,
+     [in, string] wchar_t* pMonitorName
+ );
+  
+ DWORD
+ RpcRemoteFindFirstPrinterChangeNotification(
+    [in] PRINTER_HANDLE hPrinter,
+    [in] DWORD fdwFlags,
+    [in] DWORD fdwOptions,
+    [in, string, unique] wchar_t* pszLocalMachine,
+     [in] DWORD dwPrinterLocal,
+    [in, range(0, 512)] DWORD cbBuffer,
+    [in, out, unique, size_is(cbBuffer)]
+          BYTE* pBuffer
+ );
+  
+ void
+ Opnum63NotUsedOnWire();
+  
+ void
+ Opnum64NotUsedOnWire();
+  
+ DWORD
+ RpcRemoteFindFirstPrinterChangeNotificationEx(
+    [in] PRINTER_HANDLE hPrinter,
+    [in] DWORD fdwFlags,
+    [in] DWORD fdwOptions,
+    [in, string, unique] wchar_t* pszLocalMachine,
+    [in] DWORD dwPrinterLocal,
+    [in, unique] RPC_V2_NOTIFY_OPTIONS* pOptions
+ );
+}
