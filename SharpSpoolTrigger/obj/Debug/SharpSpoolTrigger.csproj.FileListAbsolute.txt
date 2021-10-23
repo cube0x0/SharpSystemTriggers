@@ -1,0 +1,7 @@
+C:\git\SharpSystemTriggers\SharpSpoolTrigger\bin\Debug\SharpSpoolTrigger.exe.config
+C:\git\SharpSystemTriggers\SharpSpoolTrigger\bin\Debug\SharpSpoolTrigger.exe
+C:\git\SharpSystemTriggers\SharpSpoolTrigger\bin\Debug\SharpSpoolTrigger.pdb
+C:\git\SharpSystemTriggers\SharpSpoolTrigger\obj\Debug\SharpSpoolTrigger.csproj.AssemblyReference.cache
+C:\git\SharpSystemTriggers\SharpSpoolTrigger\obj\Debug\SharpSpoolTrigger.csproj.CoreCompileInputs.cache
+C:\git\SharpSystemTriggers\SharpSpoolTrigger\obj\Debug\SharpSpoolTrigger.exe
+C:\git\SharpSystemTriggers\SharpSpoolTrigger\obj\Debug\SharpSpoolTrigger.pdb

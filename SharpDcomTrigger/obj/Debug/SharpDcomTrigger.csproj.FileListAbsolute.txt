@@ -1,0 +1,7 @@
+C:\git\SharpSystemTriggers\SharpDcomTrigger\bin\Debug\SharpDcomTrigger.exe.config
+C:\git\SharpSystemTriggers\SharpDcomTrigger\bin\Debug\SharpDcomTrigger.exe
+C:\git\SharpSystemTriggers\SharpDcomTrigger\bin\Debug\SharpDcomTrigger.pdb
+C:\git\SharpSystemTriggers\SharpDcomTrigger\obj\Debug\SharpDcomTrigger.csproj.AssemblyReference.cache
+C:\git\SharpSystemTriggers\SharpDcomTrigger\obj\Debug\SharpDcomTrigger.csproj.CoreCompileInputs.cache
+C:\git\SharpSystemTriggers\SharpDcomTrigger\obj\Debug\SharpDcomTrigger.exe
+C:\git\SharpSystemTriggers\SharpDcomTrigger\obj\Debug\SharpDcomTrigger.pdb
