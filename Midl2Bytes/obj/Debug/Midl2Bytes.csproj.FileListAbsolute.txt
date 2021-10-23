@@ -1,0 +1,7 @@
+C:\git\SharpSystemTriggers\Midl2Bytes\bin\Debug\Midl2Bytes.exe.config
+C:\git\SharpSystemTriggers\Midl2Bytes\bin\Debug\Midl2Bytes.exe
+C:\git\SharpSystemTriggers\Midl2Bytes\bin\Debug\Midl2Bytes.pdb
+C:\git\SharpSystemTriggers\Midl2Bytes\obj\Debug\Midl2Bytes.csproj.AssemblyReference.cache
+C:\git\SharpSystemTriggers\Midl2Bytes\obj\Debug\Midl2Bytes.csproj.CoreCompileInputs.cache
+C:\git\SharpSystemTriggers\Midl2Bytes\obj\Debug\Midl2Bytes.exe
+C:\git\SharpSystemTriggers\Midl2Bytes\obj\Debug\Midl2Bytes.pdb

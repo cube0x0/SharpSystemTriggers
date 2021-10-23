@@ -30,10 +30,19 @@ C# Implementation of MS-RPRN RPC
 
 
 
+## SharpDcomTrigger
+
+C# Implementation of DCOM Potato triggers
+
+![](Images/dcom.png)
+
+
+
 ## Acknowledgements
 
 * [PetitPotam](https://github.com/topotam/PetitPotam) by [topotam](https://twitter.com/topotam77)
 * [SpoolSample](https://github.com/leechristensen/SpoolSample) by [Lee Christensen](http://twitter.com/tifkin_)
 * [EfsPotato](https://github.com/zcgonvh/EfsPotato) by zcgonvh
 * [pingcastle](https://github.com/vletoux/pingcastle) by [vletoux](https://twitter.com/mysmartlogon)
+* All the potato devs
 
