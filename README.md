@@ -45,4 +45,5 @@ C# Implementation of DCOM Potato triggers
 * [EfsPotato](https://github.com/zcgonvh/EfsPotato) by zcgonvh
 * [pingcastle](https://github.com/vletoux/pingcastle) by [vletoux](https://twitter.com/mysmartlogon)
 * All the potato devs
+* [tiraniddo](https://twitter.com/tiraniddo)
 
