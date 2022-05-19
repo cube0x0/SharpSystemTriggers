@@ -126,7 +126,7 @@ namespace SharpEfsTrigger
                 }
             }
 
-                status = RpcBindingSetOption(binding, 12, new IntPtr(RPCTimeOut));
+            status = RpcBindingSetOption(binding, 12, new IntPtr(RPCTimeOut));
             if (status != 0)
             {
                 Console.WriteLine("[x]RpcBindingSetOption failed with status 0x" + status.ToString("x"));
