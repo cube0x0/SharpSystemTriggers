@@ -117,8 +117,16 @@ namespace SharpEfsTrigger
                     Console.WriteLine("[x]RpcBindingSetAuthInfoEx failed with status 0x" + status.ToString("x"));
                 }
             }
+            else
+            {
+                status = RpcBindingSetAuthInfo(binding, server, /* RPC_C_AUTHN_LEVEL_PKT_PRIVACY */ 6, /* RPC_C_AUTHN_GSS_NEGOTIATE */ 9, IntPtr.Zero, 0);
+                if (status != 0)
+                {
+                    Console.WriteLine("[x]RpcBindingSetAuthInfo failed with status 0x" + status.ToString("x"));
+                }
+            }
 
-            status = RpcBindingSetOption(binding, 12, new IntPtr(RPCTimeOut));
+                status = RpcBindingSetOption(binding, 12, new IntPtr(RPCTimeOut));
             if (status != 0)
             {
                 Console.WriteLine("[x]RpcBindingSetOption failed with status 0x" + status.ToString("x"));
