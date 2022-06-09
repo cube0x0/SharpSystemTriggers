@@ -5,3 +5,10 @@ C:\git\SharpSystemTriggers\SharpEfsTrigger\obj\Debug\SharpEfsTrigger.csproj.Asse
 C:\git\SharpSystemTriggers\SharpEfsTrigger\obj\Debug\SharpEfsTrigger.csproj.CoreCompileInputs.cache
 C:\git\SharpSystemTriggers\SharpEfsTrigger\obj\Debug\SharpEfsTrigger.exe
 C:\git\SharpSystemTriggers\SharpEfsTrigger\obj\Debug\SharpEfsTrigger.pdb
+C:\Users\dev\source\repos\SharpSystemTriggers\SharpEfsTrigger\bin\Debug\SharpEfsTrigger.exe.config
+C:\Users\dev\source\repos\SharpSystemTriggers\SharpEfsTrigger\bin\Debug\SharpEfsTrigger.exe
+C:\Users\dev\source\repos\SharpSystemTriggers\SharpEfsTrigger\bin\Debug\SharpEfsTrigger.pdb
+C:\Users\dev\source\repos\SharpSystemTriggers\SharpEfsTrigger\obj\Debug\SharpEfsTrigger.csproj.AssemblyReference.cache
+C:\Users\dev\source\repos\SharpSystemTriggers\SharpEfsTrigger\obj\Debug\SharpEfsTrigger.csproj.CoreCompileInputs.cache
+C:\Users\dev\source\repos\SharpSystemTriggers\SharpEfsTrigger\obj\Debug\SharpEfsTrigger.exe
+C:\Users\dev\source\repos\SharpSystemTriggers\SharpEfsTrigger\obj\Debug\SharpEfsTrigger.pdb
