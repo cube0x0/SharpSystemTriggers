@@ -1,7 +1,0 @@
-C:\Users\dev\source\repos\SharpSystemTriggers\SharpEfsTrigger\bin\Release\SharpEfsTrigger.exe.config
-C:\Users\dev\source\repos\SharpSystemTriggers\SharpEfsTrigger\bin\Release\SharpEfsTrigger.exe
-C:\Users\dev\source\repos\SharpSystemTriggers\SharpEfsTrigger\bin\Release\SharpEfsTrigger.pdb
-C:\Users\dev\source\repos\SharpSystemTriggers\SharpEfsTrigger\obj\Release\SharpEfsTrigger.csproj.AssemblyReference.cache
-C:\Users\dev\source\repos\SharpSystemTriggers\SharpEfsTrigger\obj\Release\SharpEfsTrigger.csproj.CoreCompileInputs.cache
-C:\Users\dev\source\repos\SharpSystemTriggers\SharpEfsTrigger\obj\Release\SharpEfsTrigger.exe
-C:\Users\dev\source\repos\SharpSystemTriggers\SharpEfsTrigger\obj\Release\SharpEfsTrigger.pdb
