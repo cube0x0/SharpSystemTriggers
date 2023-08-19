@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpEfsTrigger", "SharpEfs
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpSpoolTrigger", "SharpSpoolTrigger\SharpSpoolTrigger.csproj", "{4EBB2ECA-4D57-4A89-BDC7-236F60B91EFE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpDfsTrigger", "SharpDfsTrigger\SharpDfsTrigger.csproj", "{357B2AB9-D212-48C8-97C1-295226922033}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{4EBB2ECA-4D57-4A89-BDC7-236F60B91EFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4EBB2ECA-4D57-4A89-BDC7-236F60B91EFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4EBB2ECA-4D57-4A89-BDC7-236F60B91EFE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{357B2AB9-D212-48C8-97C1-295226922033}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{357B2AB9-D212-48C8-97C1-295226922033}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{357B2AB9-D212-48C8-97C1-295226922033}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{357B2AB9-D212-48C8-97C1-295226922033}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
